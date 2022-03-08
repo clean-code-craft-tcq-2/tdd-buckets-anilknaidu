@@ -12,3 +12,17 @@ jobs:
 
     - name: all entries made
       run: bash ./.github/workflows/check-complete.sh
+
+    - name: Run and collect coverage
+      run: |
+          coverage run --branch typewise_alert.test.py
+          coverage html
+          coverage report
+    - name: Upload coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: ./htmlcov
+          retention-days: 21
+
+
