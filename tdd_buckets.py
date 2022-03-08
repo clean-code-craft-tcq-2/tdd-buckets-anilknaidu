@@ -40,9 +40,10 @@ class CurrentReadings():
             print(currentRange,",",self.CurrentRangeFrequencyDcn[currentRange])
             testText=testText+ currentRange+","+self.CurrentRangeFrequencyDcn[currentRange] +"\n"
         return(testText)
+'''
 if __name__ == '__main__':
     CurrentReadingsObject = CurrentReadings(inputCurrentReadings)
     CurrentReadingsObject.generateRangeFrequencyData()
     print(CurrentReadingsObject.exportCSV())
-
+'''
     
