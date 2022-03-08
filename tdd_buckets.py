@@ -15,7 +15,7 @@ class CurrentReadings():
 
     def updateRangeFreqDcn(self, lower_number,higher_number,currentCount):
         dcn_key = str(lower_number)+"-"+str(higher_number)
-        self.CurrentRangeFrequencyDcn[dcn_key] = currentCount
+        self.CurrentRangeFrequencyDcn[dcn_key] = str(currentCount)
 
     def generateRangeFrequencyData(self):
         self.extractNumbersList()
@@ -34,9 +34,12 @@ class CurrentReadings():
             self.updateRangeFreqDcn(lower_number,higher_number,currentCount)
 
     def exportCSV(self):
-        print("Range,","Readings")
+        print("Range, Readings")
+        testText = "Range, Readings\n"
         for currentRange in self.CurrentRangeFrequencyDcn:
             print(currentRange,",",self.CurrentRangeFrequencyDcn[currentRange])
+            testText=testText+ currentRange+","+self.CurrentRangeFrequencyDcn[currentRange] +"\n"
+        return(testText)
 if __name__ == '__main__':
     CurrentReadingsObject = CurrentReadings(inputCurrentReadings)
     CurrentReadingsObject.generateRangeFrequencyData()
