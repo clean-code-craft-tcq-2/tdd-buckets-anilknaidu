@@ -1,7 +1,7 @@
 import unittest
 from tdd_buckets import CurrentReadings
 
-currentReadingsTest = CurrentReadings("4,5,6")
+currentReadingsTest = CurrentReadings("4,5,6,8")
 
 class tdd_buckets_test(unittest.TestCase):
   def test_generateRangeFrequencyData(self):
@@ -10,7 +10,7 @@ class tdd_buckets_test(unittest.TestCase):
         
   def test_csv_data(self):
       currentReadingsTest.generateRangeFrequencyData()
-      self.assertTrue(currentReadingsTest.exportCSV()=="Range, Readings\n4-6,3\n")
+      self.assertTrue(currentReadingsTest.exportCSV()=="Range, Readings\n4-6,3\n8-8,1\n")
   
 if __name__ =="__main__":
     unittest.main()
