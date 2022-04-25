@@ -1,6 +1,3 @@
-
-inputCurrentReadings = '3, 3, 5, 4, 10, 11, 12,15,19,17,21,11,14,1,27'
-#Expected {'1-1': 1, '3-5': 4, '10-12': 4, '14-15': 2, '17-17': 1, '19-19': 1, '21-21': 1, '27-27': 1}
 class CurrentReadings():
     def __init__(self,numbers_string_input):
         self.inputCurrentRange = numbers_string_input
@@ -18,7 +15,7 @@ class CurrentReadings():
         self.CurrentRangeFrequencyDcn[dcn_key] = str(currentCount)
 
     def generateRangeFrequencyData(self):
-        self.extractNumbersList()
+        self.Current_readings_list.sort()
         if(len(self.Current_readings_list) >0):
             lower_number = self.Current_readings_list[0]
             higher_number = lower_number
@@ -40,10 +37,27 @@ class CurrentReadings():
             print(currentRange,",",self.CurrentRangeFrequencyDcn[currentRange])
             testText=testText+ currentRange+","+self.CurrentRangeFrequencyDcn[currentRange] +"\n"
         return(testText)
+    
+    def getAmpereReadingsList(self,sensorNum):
+        numbersList = self.extractNumbersList()
+        convertedList = []
+        for reading in numbersList:
+            if(sensorNum ==1 and reading in range(0,4095)):
+                convertedList.append(int(round(self.convertADCReadingToAmpereSensor1(reading),0)))
+            elif(sensorNum ==2 and reading in range(0,1023)):
+                convertedList.append(abs(int(round(self.convertADCReadingToAmpereSensor2(reading),0))))
+                #print(convertedList)
+
+        self.Current_readings_list = convertedList
+
+    def convertADCReadingToAmpereSensor1(self,reading):
+        return((reading/4094)*10)
+    
+    def convertADCReadingToAmpereSensor2(self,reading):
+        return(round(((reading/1023)*30.03)-15,3))
 '''
 if __name__ == '__main__':
     CurrentReadingsObject = CurrentReadings(inputCurrentReadings)
     CurrentReadingsObject.generateRangeFrequencyData()
     print(CurrentReadingsObject.exportCSV())
 '''
-    
