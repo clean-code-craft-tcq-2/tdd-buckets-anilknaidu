@@ -42,19 +42,24 @@ class CurrentReadings():
         numbersList = self.extractNumbersList()
         convertedList = []
         for reading in numbersList:
-            if(sensorNum ==1 and reading in range(0,4095)):
-                convertedList.append(int(round(self.convertADCReadingToAmpereSensor1(reading),0)))
-            elif(sensorNum ==2 and reading in range(0,1023)):
-                convertedList.append(abs(int(round(self.convertADCReadingToAmpereSensor2(reading),0))))
+            convertedList.append(self.convertToReadingList(sensorNum,reading))
                 #print(convertedList)
 
         self.Current_readings_list = convertedList
 
+    def convertToReadingList(self, sensorNum,reading):
+        if(sensorNum ==1):
+            return(int(round(self.convertADCReadingToAmpereSensor1(reading),0)))
+        elif(sensorNum ==2):
+            return(abs(int(round(self.convertADCReadingToAmpereSensor2(reading),0))))
+
     def convertADCReadingToAmpereSensor1(self,reading):
-        return((reading/4094)*10)
+        if reading in range(0,4095):
+            return((reading/4094)*10)
     
     def convertADCReadingToAmpereSensor2(self,reading):
-        return(round(((reading/1023)*30.03)-15,3))
+        if reading in range(0,1023):
+            return(round(((reading/1023)*30.03)-15,3))
 '''
 if __name__ == '__main__':
     CurrentReadingsObject = CurrentReadings(inputCurrentReadings)
